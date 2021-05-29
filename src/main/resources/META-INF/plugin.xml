@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>com.nanovms.ops</id>
     <name>NanoVMs OPS</name>
-    <vendor email="support@nanovms.com" url="https://nanovms.com">NanoVMs</vendor>
+    <vendor email="info@nanovms.com" url="https://nanovms.com">NanoVMs</vendor>
 
     <description>
         NanoVMs OPS Plugin provides support to run various OPS commands.
