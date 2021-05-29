@@ -1,0 +1,63 @@
+<idea-plugin>
+    <id>com.nanovms.ops</id>
+    <name>NanoVMs OPS</name>
+    <vendor email="support@nanovms.com" url="https://nanovms.com">NanoVMs</vendor>
+
+    <description>
+        NanoVMs OPS Plugin provides support to run various OPS commands.
+        * Run an application. Supported executable format is ELF.
+        * Run an application with selected configuration. Supported executable format is ELF.
+        * Run opened source file. Supported source formats are .js and .cpp.
+        * Stop running application.
+        * Build an image.
+        * Start new instance from selected image.
+        * Stop running instance.
+
+        To run ops commands, select Tools | NanoVMs.
+    </description>
+
+    <!-- please see https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <applicationService serviceInterface="com.nanovms.ops.OpsService"
+                            serviceImplementation="com.nanovms.ops.DefaultOpsService"/>
+
+        <notificationGroup displayType="BALLOON" id="NanoVMs"/>
+    </extensions>
+
+    <actions>
+        <group id="com.nanovms.ops.intellij.MenuGroup" text="NanoVMs" popup="true">
+            <add-to-group group-id="ToolsMenu"/>
+            <action id="com.nanovms.ops.RunAction"
+                    class="com.nanovms.ops.RunAction"
+                    text="Run"
+                    description="Run an application"/>
+            <action id="com.nanovms.ops.RunWithConfigAction"
+                    class="com.nanovms.ops.RunWithConfigAction"
+                    text="Run with Configuration"
+                    description="Run an application with selected configuration"/>
+            <action id="com.nanovms.ops.RunOpenedFileAction"
+                    class="com.nanovms.ops.RunOpenedFileAction"
+                    text="Run Opened File"
+                    description="Execute opened source file"/>
+            <action id="com.nanovms.ops.StopAction"
+                    class="com.nanovms.ops.StopAction"
+                    text="Stop"
+                    description="Stop running application"/>
+            <action id="com.nanovms.ops.BuildAction"
+                    class="com.nanovms.ops.BuildAction"
+                    text="Build"
+                    description="Build an image"/>
+            <action id="com.nanovms.ops.StartInstanceAction"
+                    class="com.nanovms.ops.StartInstanceAction"
+                    text="Start Instance"
+                    description="Start an instance from selected image"/>
+            <action id="com.nanovms.ops.StopInstanceAction"
+                    class="com.nanovms.ops.StopInstanceAction"
+                    text="Stop Instance"
+                    description="Stop a running instance"/>
+        </group>
+    </actions>
+</idea-plugin>
