@@ -4,17 +4,37 @@
     <vendor email="info@nanovms.com" url="https://nanovms.com">NanoVMs</vendor>
 
     <description>
-        NanoVMs OPS Plugin provides support to run various OPS commands.
-        * Run an application. Supported executable format is ELF.
-        * Run an application with selected configuration. Supported executable format is ELF.
-        * Run opened source file. Supported source formats are .js and .cpp.
-        * Stop running application.
-        * Build an image.
-        * Start new instance from selected image.
-        * Stop running instance.
-
-        To run ops commands, select Tools | NanoVMs.
+        <![CDATA[
+            <p>NanoVMs OPS Plugin provides support to run various OPS commands.</p>
+            <ul>
+                <li>Run an application. Supported executable format is ELF.</li>
+                <li>Run an application with selected configuration. Supported executable format is ELF.</li>
+                <li>Run opened source file. Supported source formats are .js and .cpp.</li>
+                <li>Stop running application.</li>
+                <li>Build an image.</li>
+                <li>Start new instance from selected image.</li>
+                <li>Stop running instance.</li>
+            </ul>
+            <p>
+                To run ops commands, select Tools | NanoVMs.
+            </p>
+        ]]>
     </description>
+
+    <change-notes>
+        <![CDATA[
+            <p>Added following commands.</p>
+            <ul>
+                <li>Run an application</li>
+                <li>Run an application with selected configuration</li>
+                <li>Run opened source file</li>
+                <li>Stop running application</li>
+                <li>Build an image</li>
+                <li>Start new instance from selected image</li>
+                <li>Stop running instance</li>
+            </ul>
+        ]]>
+    </change-notes>
 
     <!-- please see https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html
          on how to target different products -->

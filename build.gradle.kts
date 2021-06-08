@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "com.nanovms.ops"
-version = "1.0"
+version = "1.0.5"
 
 listOf("compileKotlin", "compileTestKotlin").forEach {
     tasks.getByName<KotlinCompile>(it) {
