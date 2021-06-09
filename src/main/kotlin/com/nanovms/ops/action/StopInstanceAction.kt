@@ -1,8 +1,10 @@
-package com.nanovms.ops
+package com.nanovms.ops.action
 
-import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.components.service
+import com.nanovms.ops.DropdownDialog
+import com.nanovms.ops.Log
+import com.nanovms.ops.OpsService
 
 class StopInstanceAction : BaseAction() {
     override fun isEnabled(e: AnActionEvent, ops: OpsService): Boolean {
