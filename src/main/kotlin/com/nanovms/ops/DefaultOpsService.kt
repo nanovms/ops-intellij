@@ -9,8 +9,6 @@ class DefaultOpsService() : OpsService {
         get() = _applications.toTypedArray()
 
     override fun runExecutable(filepath: String, configpath: String?): OpsResult<String> {
-        println("$filepath >> $configpath")
-
         var args = mutableListOf<String>()
         if (filepath.endsWith(".js")) {
             args.addAll(listOf("pkg", "load", "node_v14.2.0", "-a"))
@@ -108,6 +106,25 @@ class DefaultOpsService() : OpsService {
         val proc = execute("instance", "delete", name)
         return OpsResult(name, proc)
     }
+
+    private var _isInstalled: Boolean = false
+    init {
+        var file = File(homeDir() + File.separatorChar + "bin" + File.separatorChar + "ops")
+        if(file.exists()) {
+            _isInstalled = true
+        } else {
+            val pathVars = System.getenv("PATH").split(File.pathSeparator)
+            for(path in pathVars) {
+                file = File(path + File.separatorChar + "ops")
+                if(file.exists()) {
+                    _isInstalled = true
+                    break
+                }
+            }
+        }
+    }
+    override val isInstalled: Boolean
+        get() = _isInstalled
 
     override fun dispose() {
         for (app in _applications) {

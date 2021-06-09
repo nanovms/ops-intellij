@@ -6,7 +6,7 @@ import com.intellij.openapi.components.service
 import com.intellij.openapi.fileChooser.FileChooser
 import com.intellij.openapi.fileChooser.FileChooserDescriptor
 
-class RunAction : AnAction() {
+class RunAction : BaseAction() {
     override fun actionPerformed(e: AnActionEvent) {
         val descriptor = FileChooserDescriptor(true, false, true, false, false, false)
         val selectedFiles = FileChooser.chooseFiles(descriptor, null, null)

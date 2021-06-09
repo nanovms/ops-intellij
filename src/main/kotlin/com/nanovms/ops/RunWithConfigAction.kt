@@ -6,7 +6,7 @@ import com.intellij.openapi.components.service
 import com.intellij.openapi.fileChooser.FileChooser
 import com.intellij.openapi.fileChooser.FileChooserDescriptor
 
-class RunWithConfigAction : AnAction() {
+class RunWithConfigAction : BaseAction() {
     override fun actionPerformed(e: AnActionEvent) {
         val descriptor = FileChooserDescriptor(true, false, true, false, false, false)
         descriptor.title = "Select ELF or Javascript File"
