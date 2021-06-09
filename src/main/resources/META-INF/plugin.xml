@@ -5,7 +5,12 @@
 
     <description>
         <![CDATA[
-            <p>NanoVMs OPS Plugin provides support to run various OPS commands.</p>
+            <p>
+                NanoVMs OPS Plugin provides support to run various OPS commands.
+                This plugin requires OPS CLI to be installed, for more information please visit https://ops.city.
+                For quick OPS installation, run 'curl https://ops.city/get.sh -sSfL | sh' in your terminal.
+            </p>
+
             <ul>
                 <li>Run an application. Supported executable format is ELF.</li>
                 <li>Run an application with selected configuration. Supported executable format is ELF.</li>
@@ -15,6 +20,7 @@
                 <li>Start new instance from selected image.</li>
                 <li>Stop running instance.</li>
             </ul>
+
             <p>
                 To run ops commands, select Tools | NanoVMs.
             </p>
