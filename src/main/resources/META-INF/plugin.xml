@@ -56,32 +56,32 @@
     <actions>
         <group id="com.nanovms.ops.intellij.MenuGroup" text="NanoVMs" popup="true">
             <add-to-group group-id="ToolsMenu"/>
-            <action id="com.nanovms.ops.RunAction"
-                    class="com.nanovms.ops.RunAction"
+            <action id="com.nanovms.ops.action.RunAction"
+                    class="com.nanovms.ops.action.RunAction"
                     text="Run"
                     description="Run an application"/>
-            <action id="com.nanovms.ops.RunWithConfigAction"
-                    class="com.nanovms.ops.RunWithConfigAction"
+            <action id="com.nanovms.ops.action.RunWithConfigAction"
+                    class="com.nanovms.ops.action.RunWithConfigAction"
                     text="Run with Configuration"
                     description="Run an application with selected configuration"/>
-            <action id="com.nanovms.ops.RunOpenedFileAction"
-                    class="com.nanovms.ops.RunOpenedFileAction"
+            <action id="com.nanovms.ops.action.RunOpenedFileAction"
+                    class="com.nanovms.ops.action.RunOpenedFileAction"
                     text="Run Opened File"
                     description="Execute opened source file"/>
-            <action id="com.nanovms.ops.StopAction"
-                    class="com.nanovms.ops.StopAction"
+            <action id="com.nanovms.ops.action.StopAction"
+                    class="com.nanovms.ops.action.StopAction"
                     text="Stop"
                     description="Stop running application"/>
-            <action id="com.nanovms.ops.BuildAction"
-                    class="com.nanovms.ops.BuildAction"
+            <action id="com.nanovms.ops.action.BuildAction"
+                    class="com.nanovms.ops.action.BuildAction"
                     text="Build"
                     description="Build an image"/>
-            <action id="com.nanovms.ops.StartInstanceAction"
-                    class="com.nanovms.ops.StartInstanceAction"
+            <action id="com.nanovms.ops.action.StartInstanceAction"
+                    class="com.nanovms.ops.action.StartInstanceAction"
                     text="Start Instance"
                     description="Start an instance from selected image"/>
-            <action id="com.nanovms.ops.StopInstanceAction"
-                    class="com.nanovms.ops.StopInstanceAction"
+            <action id="com.nanovms.ops.action.StopInstanceAction"
+                    class="com.nanovms.ops.action.StopInstanceAction"
                     text="Stop Instance"
                     description="Stop a running instance"/>
         </group>

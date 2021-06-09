@@ -1,10 +1,11 @@
-package com.nanovms.ops
+package com.nanovms.ops.action
 
-import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.components.service
 import com.intellij.openapi.fileEditor.FileDocumentManager
 import com.intellij.openapi.fileEditor.FileEditorManager
+import com.nanovms.ops.Log
+import com.nanovms.ops.OpsService
 
 class RunOpenedFileAction : BaseAction() {
     override fun isEnabled(e: AnActionEvent, ops: OpsService): Boolean {
