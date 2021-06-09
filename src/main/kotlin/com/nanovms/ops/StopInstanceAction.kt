@@ -4,10 +4,9 @@ import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.components.service
 
-class StopInstanceAction : AnAction() {
-    override fun update(e: AnActionEvent) {
-        val ops = service<OpsService>()
-        e.presentation.isEnabled = ops.hasInstances
+class StopInstanceAction : BaseAction() {
+    override fun isEnabled(e: AnActionEvent, ops: OpsService): Boolean {
+        return ops.hasInstances
     }
 
     override fun actionPerformed(e: AnActionEvent) {

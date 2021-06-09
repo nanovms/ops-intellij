@@ -16,4 +16,5 @@ interface OpsService: Disposable {
     fun listImages(): Array<String>
     val hasInstances: Boolean
     fun listInstances(): Array<String>
+    val isInstalled: Boolean
 }
