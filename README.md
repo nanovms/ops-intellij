@@ -1,6 +1,9 @@
 # NanoVMs OPS Plugin for IntelliJ IDE
 
-NanoVMs OPS Plugin provides support to run various OPS commands.
+This plugin runs Nanos unikernels through integration with ops.
+
+Learn more about https://nanos.org and https://ops.city .
+
 * Run an application. Supported executable format is ELF.
 * Run an application with selected configuration. Supported executable format is ELF.
 * Run opened source file. Supported source formats are .js and .cpp.
