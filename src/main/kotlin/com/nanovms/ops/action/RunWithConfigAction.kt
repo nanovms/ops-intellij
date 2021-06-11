@@ -1,12 +1,13 @@
-package com.nanovms.ops
+package com.nanovms.ops.action
 
-import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.components.service
 import com.intellij.openapi.fileChooser.FileChooser
 import com.intellij.openapi.fileChooser.FileChooserDescriptor
+import com.nanovms.ops.Log
+import com.nanovms.ops.OpsService
 
-class RunWithConfigAction : AnAction() {
+class RunWithConfigAction : BaseAction() {
     override fun actionPerformed(e: AnActionEvent) {
         val descriptor = FileChooserDescriptor(true, false, true, false, false, false)
         descriptor.title = "Select ELF or Javascript File"

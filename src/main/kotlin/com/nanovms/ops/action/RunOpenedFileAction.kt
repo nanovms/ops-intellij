@@ -1,20 +1,19 @@
-package com.nanovms.ops
+package com.nanovms.ops.action
 
-import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.components.service
 import com.intellij.openapi.fileEditor.FileDocumentManager
 import com.intellij.openapi.fileEditor.FileEditorManager
+import com.nanovms.ops.Log
+import com.nanovms.ops.OpsService
 
-class RunOpenedFileAction : AnAction() {
-    override fun update(e: AnActionEvent) {
+class RunOpenedFileAction : BaseAction() {
+    override fun isEnabled(e: AnActionEvent, ops: OpsService): Boolean {
         if (e.project == null) {
-            e.presentation.isEnabled = false
-            return
+            return false
         }
-
         val editor = FileEditorManager.getInstance(e.project!!).selectedTextEditor
-        e.presentation.isEnabled = editor != null
+        return (editor != null)
     }
 
     override fun actionPerformed(e: AnActionEvent) {

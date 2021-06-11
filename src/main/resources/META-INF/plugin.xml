@@ -4,17 +4,43 @@
     <vendor email="info@nanovms.com" url="https://nanovms.com">NanoVMs</vendor>
 
     <description>
-        NanoVMs OPS Plugin provides support to run various OPS commands.
-        * Run an application. Supported executable format is ELF.
-        * Run an application with selected configuration. Supported executable format is ELF.
-        * Run opened source file. Supported source formats are .js and .cpp.
-        * Stop running application.
-        * Build an image.
-        * Start new instance from selected image.
-        * Stop running instance.
+        <![CDATA[
+            <p>
+                NanoVMs OPS Plugin provides support to run various OPS commands.
+                This plugin requires OPS CLI to be installed, for more information please visit https://ops.city.
+                For quick OPS installation, run 'curl https://ops.city/get.sh -sSfL | sh' in your terminal.
+            </p>
 
-        To run ops commands, select Tools | NanoVMs.
+            <ul>
+                <li>Run an application. Supported executable format is ELF.</li>
+                <li>Run an application with selected configuration. Supported executable format is ELF.</li>
+                <li>Run opened source file. Supported source formats are .js and .cpp.</li>
+                <li>Stop running application.</li>
+                <li>Build an image.</li>
+                <li>Start new instance from selected image.</li>
+                <li>Stop running instance.</li>
+            </ul>
+
+            <p>
+                To run ops commands, select Tools | NanoVMs.
+            </p>
+        ]]>
     </description>
+
+    <change-notes>
+        <![CDATA[
+            <p>Added following commands.</p>
+            <ul>
+                <li>Run an application</li>
+                <li>Run an application with selected configuration</li>
+                <li>Run opened source file</li>
+                <li>Stop running application</li>
+                <li>Build an image</li>
+                <li>Start new instance from selected image</li>
+                <li>Stop running instance</li>
+            </ul>
+        ]]>
+    </change-notes>
 
     <!-- please see https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html
          on how to target different products -->
@@ -30,32 +56,32 @@
     <actions>
         <group id="com.nanovms.ops.intellij.MenuGroup" text="NanoVMs" popup="true">
             <add-to-group group-id="ToolsMenu"/>
-            <action id="com.nanovms.ops.RunAction"
-                    class="com.nanovms.ops.RunAction"
+            <action id="com.nanovms.ops.action.RunAction"
+                    class="com.nanovms.ops.action.RunAction"
                     text="Run"
                     description="Run an application"/>
-            <action id="com.nanovms.ops.RunWithConfigAction"
-                    class="com.nanovms.ops.RunWithConfigAction"
+            <action id="com.nanovms.ops.action.RunWithConfigAction"
+                    class="com.nanovms.ops.action.RunWithConfigAction"
                     text="Run with Configuration"
                     description="Run an application with selected configuration"/>
-            <action id="com.nanovms.ops.RunOpenedFileAction"
-                    class="com.nanovms.ops.RunOpenedFileAction"
+            <action id="com.nanovms.ops.action.RunOpenedFileAction"
+                    class="com.nanovms.ops.action.RunOpenedFileAction"
                     text="Run Opened File"
                     description="Execute opened source file"/>
-            <action id="com.nanovms.ops.StopAction"
-                    class="com.nanovms.ops.StopAction"
+            <action id="com.nanovms.ops.action.StopAction"
+                    class="com.nanovms.ops.action.StopAction"
                     text="Stop"
                     description="Stop running application"/>
-            <action id="com.nanovms.ops.BuildAction"
-                    class="com.nanovms.ops.BuildAction"
+            <action id="com.nanovms.ops.action.BuildAction"
+                    class="com.nanovms.ops.action.BuildAction"
                     text="Build"
                     description="Build an image"/>
-            <action id="com.nanovms.ops.StartInstanceAction"
-                    class="com.nanovms.ops.StartInstanceAction"
+            <action id="com.nanovms.ops.action.StartInstanceAction"
+                    class="com.nanovms.ops.action.StartInstanceAction"
                     text="Start Instance"
                     description="Start an instance from selected image"/>
-            <action id="com.nanovms.ops.StopInstanceAction"
-                    class="com.nanovms.ops.StopInstanceAction"
+            <action id="com.nanovms.ops.action.StopInstanceAction"
+                    class="com.nanovms.ops.action.StopInstanceAction"
                     text="Stop Instance"
                     description="Stop a running instance"/>
         </group>

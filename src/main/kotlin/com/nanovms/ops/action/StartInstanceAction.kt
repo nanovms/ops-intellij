@@ -1,13 +1,14 @@
-package com.nanovms.ops
+package com.nanovms.ops.action
 
-import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.components.service
+import com.nanovms.ops.DropdownDialog
+import com.nanovms.ops.Log
+import com.nanovms.ops.OpsService
 
-class StartInstanceAction : AnAction() {
-    override fun update(e: AnActionEvent) {
-        val ops = service<OpsService>()
-        e.presentation.isEnabled = ops.hasImages
+class StartInstanceAction : BaseAction() {
+    override fun isEnabled(e: AnActionEvent, ops: OpsService): Boolean {
+        return ops.hasImages
     }
 
     override fun actionPerformed(e: AnActionEvent) {

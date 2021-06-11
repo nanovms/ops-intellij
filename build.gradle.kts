@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "com.nanovms.ops"
-version = "1.0"
+version = "1.0.7"
 
 listOf("compileKotlin", "compileTestKotlin").forEach {
     tasks.getByName<KotlinCompile>(it) {
@@ -25,9 +25,4 @@ dependencies {
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
     version = "2021.1.1"
-}
-tasks.getByName<org.jetbrains.intellij.tasks.PatchPluginXmlTask>("patchPluginXml") {
-    changeNotes("""
-      Add change notes here.<br>
-      <em>most HTML tags may be used</em>""")
 }
