@@ -6,7 +6,6 @@ import com.intellij.openapi.vfs.VirtualFile
 import com.nanovms.ops.command.Command
 
 interface Service: Disposable {
-    val applications: Array<Application>
     val hasImages: Boolean
     fun listImages(): Array<String>
     val hasInstances: Boolean

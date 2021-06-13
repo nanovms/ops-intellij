@@ -9,10 +9,6 @@ import okhttp3.internal.toImmutableList
 import java.io.File
 
 class ServiceDefault() : Service {
-    private val _applications = mutableListOf<Application>()
-    override val applications: Array<Application>
-        get() = _applications.toTypedArray()
-
     override val hasImages: Boolean
         get() {
             val proc = execute("image", "list")
@@ -73,8 +69,10 @@ class ServiceDefault() : Service {
         get() = _isInstalled
 
     override fun dispose() {
-        for (app in _applications) {
-            app.terminate()
+        for (cmd in _commands) {
+            if(cmd.isAlive) {
+                cmd.stop()
+            }
         }
     }
 
