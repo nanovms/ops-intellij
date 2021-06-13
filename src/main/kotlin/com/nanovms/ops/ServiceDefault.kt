@@ -4,6 +4,7 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import com.nanovms.ops.command.Command
 import com.nanovms.ops.ui.ToolWindowFactory
+import okhttp3.internal.toImmutableList
 import java.io.File
 
 class ServiceDefault() : Service {
@@ -146,6 +147,16 @@ class ServiceDefault() : Service {
     override fun releaseCommand(command: Command) {
         _commands.remove(command)
         println("released ${command}")
+    }
+
+    override fun runningCommands(): Collection<Command> {
+        val list = mutableListOf<Command>()
+        for(cmd in _commands) {
+            if (cmd.isAlive) {
+                list.add(cmd)
+            }
+        }
+        return list.toImmutableList()
     }
 
     override fun println(project: Project, vararg texts: String) {

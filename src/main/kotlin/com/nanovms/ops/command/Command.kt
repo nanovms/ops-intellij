@@ -5,16 +5,25 @@ import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
 import com.nanovms.ops.Service
 import java.io.File
+import java.io.InputStream
 
 abstract class Command(val project: Project) {
-    private lateinit var monitor: CommandMonitor
+    var name: String = ""
 
-    private var _processHandler: OSProcessHandler? = null
-    val processHandler: OSProcessHandler?
-        get() = _processHandler
+    val pid: Long
+        get() = _processHandler.process.pid()
 
     val isAlive: Boolean
-        get() = processHandler?.process?.isAlive == true
+        get() = _processHandler.process.isAlive
+
+    val hasError: Boolean
+        get() = _processHandler.exitCode != 0
+
+    val commandLine: String
+        get() = _processHandler.commandLine
+
+    val inputStream: InputStream
+        get() = _processHandler.process.inputStream
 
     private var _listener: CommandListener? = null
     val listener: CommandListener?
@@ -40,6 +49,7 @@ abstract class Command(val project: Project) {
         }
 
         _processHandler = OSProcessHandler(Runtime.getRuntime().exec(command), command, Charsets.UTF_8)
+        _processHandler.setShouldDestroyProcessRecursively(true)
         _processHandler?.addProcessListener(CommandProcessListener(this))
         _processHandler?.startNotify()
         monitor = CommandMonitor(project, this)
@@ -49,10 +59,17 @@ abstract class Command(val project: Project) {
         ops.holdCommand(this)
     }
 
+    fun stop() {
+        _processHandler.destroyProcess()
+    }
+
     protected abstract fun createArguments(): Collection<String>
 
     private fun homeDir(): String {
         val userHomeDir = System.getProperty("user.home")
         return userHomeDir + File.separatorChar + ".ops"
     }
+
+    private lateinit var monitor: CommandMonitor
+    private lateinit var _processHandler: OSProcessHandler
 }

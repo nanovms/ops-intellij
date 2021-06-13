@@ -8,25 +8,22 @@ import java.io.InputStreamReader
 
 class CommandMonitor(private val project: Project, private val command: Command): Thread() {
     override fun run() {
-        command.processHandler?.let {
-            val ops = service<Service>()
-            val process = it.process
-            val reader = BufferedReader(InputStreamReader(process.inputStream))
-            var line: String?
-            while(process.isAlive) {
-                line = reader.readLine()
-                line?.let {
-                    ops.println(project, it)
-                }
-            }
-
+        val ops = service<Service>()
+        val reader = BufferedReader(InputStreamReader(command.inputStream))
+        var line: String?
+        while(command.isAlive) {
             line = reader.readLine()
-            while(line != null) {
-                ops.println(project, line)
-                line = reader.readLine()
+            line?.let {
+                ops.println(project, it)
             }
-
-            ops.releaseCommand(command)
         }
+
+        line = reader.readLine()
+        while(line != null) {
+            ops.println(project, line)
+            line = reader.readLine()
+        }
+
+        ops.releaseCommand(command)
     }
 }

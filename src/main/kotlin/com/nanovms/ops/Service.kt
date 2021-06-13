@@ -22,6 +22,7 @@ interface Service: Disposable {
 
     fun holdCommand(command: Command);
     fun releaseCommand(command: Command)
+    fun runningCommands(): Collection<Command>
 
     fun println(project: Project, vararg texts: String)
 }
