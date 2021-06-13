@@ -24,7 +24,8 @@ class RunCommand(project: Project,
    }
 
     init {
+        type = CommandType.RunExecutable
         val path = Paths.get(filepath)
-        super.name = path.fileName.toString()
+        name = path.fileName.toString()
     }
 }

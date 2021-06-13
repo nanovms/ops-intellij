@@ -7,8 +7,14 @@ import com.nanovms.ops.Service
 import java.io.File
 import java.io.InputStream
 
+enum class CommandType {
+    RunExecutable,
+    Other
+}
+
 abstract class Command(val project: Project) {
     var name: String = ""
+    var type: CommandType = CommandType.Other
 
     val pid: Long
         get() = _processHandler.process.pid()

@@ -9,12 +9,12 @@ import com.nanovms.ops.ui.DropdownDialogRenderer
 
 class StopAction : BaseAction() {
     override fun isEnabled(e: AnActionEvent, ops: Service): Boolean {
-        return ops.runningCommands().isNotEmpty()
+        return ops.runningExecutables().isNotEmpty()
     }
 
     override fun actionPerformed(e: AnActionEvent) {
         val ops = service<Service>()
-        val dialog = DropdownDialog(ops.runningCommands().toTypedArray(), DropdownDialogRenderer(::dialogRenderFunc))
+        val dialog = DropdownDialog(ops.runningExecutables().toTypedArray(), DropdownDialogRenderer(::dialogRenderFunc))
         val isOK = dialog.showAndGet()
         if(isOK) {
             val cmd = dialog.model.selectedItem as Command

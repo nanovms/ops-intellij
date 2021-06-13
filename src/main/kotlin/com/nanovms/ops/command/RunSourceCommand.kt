@@ -5,8 +5,6 @@ import com.intellij.openapi.vfs.VirtualFile
 import java.io.File
 
 class RunSourceCommand(project: Project, private val file: VirtualFile) : Command(project) {
-
-
     override fun createArguments(): Collection<String> {
         when (file.extension) {
             "js" -> {
@@ -18,5 +16,9 @@ class RunSourceCommand(project: Project, private val file: VirtualFile) : Comman
             }
         }
         throw UnsupportedSourceType(file)
+    }
+
+    init {
+        type = CommandType.RunExecutable
     }
 }

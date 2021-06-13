@@ -3,6 +3,7 @@ package com.nanovms.ops
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import com.nanovms.ops.command.Command
+import com.nanovms.ops.command.CommandType
 import com.nanovms.ops.ui.ToolWindowFactory
 import okhttp3.internal.toImmutableList
 import java.io.File
@@ -149,10 +150,10 @@ class ServiceDefault() : Service {
         _commands.remove(command)
     }
 
-    override fun runningCommands(): Collection<Command> {
+    override fun runningExecutables(): Collection<Command> {
         val list = mutableListOf<Command>()
         for (cmd in _commands) {
-            if (cmd.isAlive) {
+            if ((cmd.type == CommandType.RunExecutable) && cmd.isAlive) {
                 list.add(cmd)
             }
         }
