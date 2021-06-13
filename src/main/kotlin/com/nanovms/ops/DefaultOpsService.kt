@@ -1,6 +1,8 @@
 package com.nanovms.ops
 
+import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
+import com.nanovms.ops.ui.ToolWindowFactory
 import java.io.File
 
 class DefaultOpsService() : OpsService {
@@ -130,6 +132,23 @@ class DefaultOpsService() : OpsService {
         for (app in _applications) {
             app.terminate()
         }
+    }
+
+    private val _commands = mutableListOf<Command>()
+    override fun holdCommand(command: Command) {
+        if(command.isAlive) {
+            println("watching ${command}")
+            _commands.add(command)
+        }
+    }
+
+    override fun releaseCommand(command: Command) {
+        _commands.remove(command)
+        println("released ${command}")
+    }
+
+    override fun println(project: Project, vararg texts: String) {
+        ToolWindowFactory.println(project, texts.joinToString(" "))
     }
 
     private fun execute(vararg args: String): OpsProcess {
