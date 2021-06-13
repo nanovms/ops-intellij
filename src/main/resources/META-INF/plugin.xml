@@ -47,8 +47,8 @@
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceInterface="com.nanovms.ops.OpsService"
-                            serviceImplementation="com.nanovms.ops.DefaultOpsService"/>
+        <applicationService serviceInterface="com.nanovms.ops.Service"
+                            serviceImplementation="com.nanovms.ops.ServiceDefault"/>
 
         <notificationGroup displayType="BALLOON" id="NanoVMs"/>
 

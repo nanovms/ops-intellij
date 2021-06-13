@@ -4,15 +4,15 @@ import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.components.service
 import com.nanovms.ops.DropdownDialog
 import com.nanovms.ops.Log
-import com.nanovms.ops.OpsService
+import com.nanovms.ops.Service
 
 class StartInstanceAction : BaseAction() {
-    override fun isEnabled(e: AnActionEvent, ops: OpsService): Boolean {
+    override fun isEnabled(e: AnActionEvent, ops: Service): Boolean {
         return ops.hasImages
     }
 
     override fun actionPerformed(e: AnActionEvent) {
-        val ops = service<OpsService>()
+        val ops = service<Service>()
         val dialog = DropdownDialog(ops.listImages())
         val isOK = dialog.showAndGet()
         if (isOK) {

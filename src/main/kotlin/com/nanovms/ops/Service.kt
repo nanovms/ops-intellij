@@ -4,7 +4,7 @@ import com.intellij.openapi.Disposable
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 
-interface OpsService: Disposable {
+interface Service: Disposable {
     fun runExecutable(filepath: String, configpath: String? = null): OpsResult<String>
     fun runSource(file: VirtualFile): OpsResult<String>
     fun stop(app: Application)

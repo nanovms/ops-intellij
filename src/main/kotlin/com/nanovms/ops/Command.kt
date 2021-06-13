@@ -44,7 +44,7 @@ abstract class Command(val project: Project) {
         monitor = CommandMonitor(project, this)
         monitor.start()
 
-        val ops = service<OpsService>()
+        val ops = service<Service>()
         ops.holdCommand(this)
     }
 

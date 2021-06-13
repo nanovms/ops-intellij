@@ -5,7 +5,7 @@ import com.intellij.openapi.vfs.VirtualFile
 import com.nanovms.ops.ui.ToolWindowFactory
 import java.io.File
 
-class DefaultOpsService() : OpsService {
+class ServiceDefault() : Service {
     private val _applications = mutableListOf<Application>()
     override val applications: Array<Application>
         get() = _applications.toTypedArray()

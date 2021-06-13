@@ -5,7 +5,7 @@ import com.intellij.openapi.components.service
 import com.intellij.openapi.fileChooser.FileChooser
 import com.intellij.openapi.fileChooser.FileChooserDescriptor
 import com.nanovms.ops.Log
-import com.nanovms.ops.OpsService
+import com.nanovms.ops.Service
 
 class RunWithConfigAction : BaseAction() {
     override fun actionPerformed(e: AnActionEvent) {
@@ -18,7 +18,7 @@ class RunWithConfigAction : BaseAction() {
             descriptor.title = "Select Configuration File"
             selectedFiles = FileChooser.chooseFiles(descriptor, null, null)
 
-            val ops = service<OpsService>()
+            val ops = service<Service>()
             val result = ops.runExecutable(filepath, selectedFiles[0].path)
             if (result.hasError) {
                 Log.error(result.error)

@@ -8,7 +8,7 @@ import java.io.InputStreamReader
 class CommandMonitor(private val project: Project, private val command: Command): Thread() {
     override fun run() {
         command.processHandler?.let {
-            val ops = service<OpsService>()
+            val ops = service<Service>()
             val process = it.process
             val reader = BufferedReader(InputStreamReader(process.inputStream))
             var line: String?

@@ -11,7 +11,7 @@ class CommandProcessListener(private val command: Command): ProcessAdapter() {
 
     override fun startNotified(event: ProcessEvent) {
         command.processHandler?.let {
-            val ops = service<OpsService>()
+            val ops = service<Service>()
             ops.println(command.project, "\n\n[exec] ${it.commandLine}")
         }
         command.listener?.started(CommandEvent(event))
@@ -19,7 +19,7 @@ class CommandProcessListener(private val command: Command): ProcessAdapter() {
 
     override fun processTerminated(event: ProcessEvent) {
         event.text?.let {
-            val ops = service<OpsService>()
+            val ops = service<Service>()
             ops.println(command.project, event.text)
         }
         command.listener?.terminated(CommandEvent(event))

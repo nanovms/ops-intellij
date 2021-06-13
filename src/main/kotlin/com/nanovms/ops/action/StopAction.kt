@@ -5,12 +5,12 @@ import com.intellij.openapi.components.service
 import com.nanovms.ops.*
 
 class StopAction : BaseAction() {
-    override fun isEnabled(e: AnActionEvent, ops: OpsService): Boolean {
+    override fun isEnabled(e: AnActionEvent, ops: Service): Boolean {
         return ops.applications.isNotEmpty()
     }
 
     override fun actionPerformed(e: AnActionEvent) {
-        val ops = service<OpsService>()
+        val ops = service<Service>()
         val dialog = DropdownDialog(ops.applications, DropdownDialogRenderer(::dialogRenderFunc))
         val isOK = dialog.showAndGet()
         if(isOK) {

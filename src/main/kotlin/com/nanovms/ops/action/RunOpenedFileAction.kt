@@ -5,10 +5,10 @@ import com.intellij.openapi.components.service
 import com.intellij.openapi.fileEditor.FileDocumentManager
 import com.intellij.openapi.fileEditor.FileEditorManager
 import com.nanovms.ops.Log
-import com.nanovms.ops.OpsService
+import com.nanovms.ops.Service
 
 class RunOpenedFileAction : BaseAction() {
-    override fun isEnabled(e: AnActionEvent, ops: OpsService): Boolean {
+    override fun isEnabled(e: AnActionEvent, ops: Service): Boolean {
         if (e.project == null) {
             return false
         }
@@ -26,7 +26,7 @@ class RunOpenedFileAction : BaseAction() {
                     return
                 }
 
-                val ops = service<OpsService>()
+                val ops = service<Service>()
                 val result = ops.runSource(file)
                 if (result == null) {
                     Log.errorAndNotify("Unsupported source file: ${file.path}")
