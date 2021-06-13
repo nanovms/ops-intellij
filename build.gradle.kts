@@ -20,6 +20,7 @@ repositories {
 
 dependencies {
     implementation(kotlin("stdlib"))
+    implementation(kotlin("script-runtime"))
 }
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/

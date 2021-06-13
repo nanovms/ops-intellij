@@ -51,6 +51,8 @@
                             serviceImplementation="com.nanovms.ops.DefaultOpsService"/>
 
         <notificationGroup displayType="BALLOON" id="NanoVMs"/>
+
+        <toolWindow id="NanoVMs" anchor="bottom" factoryClass="com.nanovms.ops.ui.ToolWindowFactory"/>
     </extensions>
 
     <actions>
