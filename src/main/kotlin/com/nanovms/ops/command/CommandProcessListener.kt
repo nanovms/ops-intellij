@@ -1,9 +1,10 @@
-package com.nanovms.ops
+package com.nanovms.ops.command
 
 import com.intellij.execution.process.ProcessAdapter
 import com.intellij.execution.process.ProcessEvent
 import com.intellij.openapi.components.service
 import com.intellij.openapi.util.Key
+import com.nanovms.ops.Service
 
 class CommandProcessListener(private val command: Command): ProcessAdapter() {
 

@@ -1,4 +1,4 @@
-package com.nanovms.ops
+package com.nanovms.ops.command
 
 import com.intellij.execution.process.ProcessEvent
 

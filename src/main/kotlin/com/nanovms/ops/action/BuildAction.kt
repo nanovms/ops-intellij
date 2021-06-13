@@ -3,9 +3,10 @@ package com.nanovms.ops.action
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.fileChooser.FileChooser
 import com.intellij.openapi.fileChooser.FileChooserDescriptor
-import com.nanovms.ops.CommandEvent
-import com.nanovms.ops.CommandListener
+import com.nanovms.ops.command.CommandEvent
+import com.nanovms.ops.command.CommandListener
 import com.nanovms.ops.Log
+import com.nanovms.ops.command.BuildCommand
 
 class BuildAction : BaseAction() {
     override fun actionPerformed(e: AnActionEvent) {

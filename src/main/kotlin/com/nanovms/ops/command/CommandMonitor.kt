@@ -1,7 +1,8 @@
-package com.nanovms.ops
+package com.nanovms.ops.command
 
 import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
+import com.nanovms.ops.Service
 import java.io.BufferedReader
 import java.io.InputStreamReader
 

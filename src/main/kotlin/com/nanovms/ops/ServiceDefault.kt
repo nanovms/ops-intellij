@@ -2,6 +2,7 @@ package com.nanovms.ops
 
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
+import com.nanovms.ops.command.Command
 import com.nanovms.ops.ui.ToolWindowFactory
 import java.io.File
 
