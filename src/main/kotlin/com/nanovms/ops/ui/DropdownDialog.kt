@@ -1,4 +1,4 @@
-package com.nanovms.ops
+package com.nanovms.ops.ui
 
 import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.ui.DialogWrapper

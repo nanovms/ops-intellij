@@ -2,7 +2,7 @@ package com.nanovms.ops.action
 
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.components.service
-import com.nanovms.ops.DropdownDialog
+import com.nanovms.ops.ui.DropdownDialog
 import com.nanovms.ops.Log
 import com.nanovms.ops.Service
 

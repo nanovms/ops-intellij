@@ -2,7 +2,11 @@ package com.nanovms.ops.action
 
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.components.service
-import com.nanovms.ops.*
+import com.nanovms.ops.Application
+import com.nanovms.ops.Log
+import com.nanovms.ops.Service
+import com.nanovms.ops.ui.DropdownDialog
+import com.nanovms.ops.ui.DropdownDialogRenderer
 
 class StopAction : BaseAction() {
     override fun isEnabled(e: AnActionEvent, ops: Service): Boolean {
