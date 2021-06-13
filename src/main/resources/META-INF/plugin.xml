@@ -66,8 +66,8 @@
                     class="com.nanovms.ops.action.RunWithConfigAction"
                     text="Run with Configuration"
                     description="Run an application with selected configuration"/>
-            <action id="com.nanovms.ops.action.RunOpenedFileAction"
-                    class="com.nanovms.ops.action.RunOpenedFileAction"
+            <action id="com.nanovms.ops.action.RunSourceAction"
+                    class="com.nanovms.ops.action.RunSourceAction"
                     text="Run Opened File"
                     description="Execute opened source file"/>
             <action id="com.nanovms.ops.action.StopAction"
