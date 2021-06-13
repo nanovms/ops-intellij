@@ -112,21 +112,23 @@ class ServiceDefault() : Service {
     }
 
     private var _isInstalled: Boolean = false
+
     init {
         var file = File(homeDir() + File.separatorChar + "bin" + File.separatorChar + "ops")
-        if(file.exists()) {
+        if (file.exists()) {
             _isInstalled = true
         } else {
             val pathVars = System.getenv("PATH").split(File.pathSeparator)
-            for(path in pathVars) {
+            for (path in pathVars) {
                 file = File(path + File.separatorChar + "ops")
-                if(file.exists()) {
+                if (file.exists()) {
                     _isInstalled = true
                     break
                 }
             }
         }
     }
+
     override val isInstalled: Boolean
         get() = _isInstalled
 
@@ -138,20 +140,18 @@ class ServiceDefault() : Service {
 
     private val _commands = mutableListOf<Command>()
     override fun holdCommand(command: Command) {
-        if(command.isAlive) {
-            println("watching ${command}")
+        if (command.isAlive) {
             _commands.add(command)
         }
     }
 
     override fun releaseCommand(command: Command) {
         _commands.remove(command)
-        println("released ${command}")
     }
 
     override fun runningCommands(): Collection<Command> {
         val list = mutableListOf<Command>()
-        for(cmd in _commands) {
+        for (cmd in _commands) {
             if (cmd.isAlive) {
                 list.add(cmd)
             }

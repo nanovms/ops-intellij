@@ -12,7 +12,7 @@ class CommandProcessListener(private val command: Command) : ProcessAdapter() {
 
     override fun startNotified(event: ProcessEvent) {
         val ops = service<Service>()
-        ops.println(command.project, "\n\n[exec] ${command.commandLine}")
+        ops.println(command.project, "\n\n[${command.pid}] ${command.commandLine}")
         command.listener?.started(command)
     }
 
@@ -21,7 +21,7 @@ class CommandProcessListener(private val command: Command) : ProcessAdapter() {
         event.text?.let {
             ops.println(command.project, event.text)
         }
-        ops.println(command.project, "[terminated] PID #${command.pid}")
+        ops.println(command.project, "[${command.pid}] ${command.name} terminated")
         command.listener?.terminated(command)
     }
 }
