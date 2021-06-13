@@ -6,13 +6,6 @@ import com.intellij.openapi.vfs.VirtualFile
 import com.nanovms.ops.command.Command
 
 interface Service: Disposable {
-    fun runExecutable(filepath: String, configpath: String? = null): OpsResult<String>
-    fun runSource(file: VirtualFile): OpsResult<String>
-    fun stop(app: Application)
-    fun build(filepath: String): OpsResult<String>
-    fun startInstance(imageName: String): OpsResult<String>
-    fun stopInstance(name: String): OpsResult<String>
-
     val applications: Array<Application>
     val hasImages: Boolean
     fun listImages(): Array<String>

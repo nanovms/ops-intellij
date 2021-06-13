@@ -13,49 +13,6 @@ class ServiceDefault() : Service {
     override val applications: Array<Application>
         get() = _applications.toTypedArray()
 
-    override fun runExecutable(filepath: String, configpath: String?): OpsResult<String> {
-        var args = mutableListOf<String>()
-        if (filepath.endsWith(".js")) {
-            args.addAll(listOf("pkg", "load", "node_v14.2.0", "-a"))
-        } else {
-            args.add("run")
-        }
-
-        args.add(filepath)
-
-        configpath?.let {
-            args.addAll(listOf("-c", it))
-        }
-
-        val proc = execute(*args.toTypedArray())
-        _applications.add(Application(filepath, proc))
-        return OpsResult(filepath, proc)
-    }
-
-    override fun runSource(file: VirtualFile): OpsResult<String> {
-        when (file.extension) {
-            "js" -> {
-                val proc = execute("pkg", "load", "node_v14.2.0", "-a", file.path)
-                _applications.add(Application(file.path, proc))
-                return OpsResult(file.path, proc)
-            }
-            "cpp" -> {
-                val binpath = file.parent.path + File.pathSeparatorChar + file.name
-                val proc = execute("g++", file.path, "-o", binpath)
-                if (!proc.waitFor()) {
-                    return OpsResult(file.path, proc)
-                }
-                return runExecutable(binpath)
-            }
-            else -> return OpsResult(file.path).withError("Unsupported source type")
-        }
-    }
-
-    override fun stop(app: Application) {
-        app.terminate()
-        _applications.remove(app)
-    }
-
     override val hasImages: Boolean
         get() {
             val proc = execute("image", "list")
@@ -92,24 +49,6 @@ class ServiceDefault() : Service {
             throw Exception(proc.errorOutput)
         }
         return extractTableOutput(proc.output.trim(), 2)
-    }
-
-    override fun build(filePath: String): OpsResult<String> {
-        val proc = execute("build", filePath)
-        if (!proc.waitFor()) {
-            throw Exception(proc.errorOutput)
-        }
-        return OpsResult(filePath, proc)
-    }
-
-    override fun startInstance(imageName: String): OpsResult<String> {
-        val proc = execute("instance", "create", imageName)
-        return OpsResult(imageName, proc)
-    }
-
-    override fun stopInstance(name: String): OpsResult<String> {
-        val proc = execute("instance", "delete", name)
-        return OpsResult(name, proc)
     }
 
     private var _isInstalled: Boolean = false
