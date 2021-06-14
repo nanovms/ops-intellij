@@ -21,8 +21,8 @@ class StartInstanceAction : BaseAction() {
             val isOK = dialog.showAndGet()
             if (isOK) {
                 val selectedImage = dialog.model.selectedItem as String
-                val command = StartInstanceCommand(it, selectedImage).withListener(
-                    object: CommandListener() {
+                StartInstanceCommand(it, selectedImage).withListener(
+                    object : CommandListener() {
                         override fun started(cmd: Command) {
                             Log.notifyInfo("[${cmd.pid}] ${cmd.name} started")
                         }
@@ -31,8 +31,7 @@ class StartInstanceAction : BaseAction() {
                             Log.notifyInfo("[${cmd.pid}] ${cmd.name} terminated")
                         }
                     }
-                )
-                command.execute()
+                ).execute()
             }
         }
     }

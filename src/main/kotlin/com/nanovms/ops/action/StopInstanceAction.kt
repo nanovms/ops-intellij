@@ -22,8 +22,7 @@ class StopInstanceAction : BaseAction() {
             val isOK = dialog.showAndGet()
             if (isOK) {
                 val instanceName = dialog.model.selectedItem as String
-                val command = StopInstanceCommand(it, instanceName)
-                command.execute()
+                StopInstanceCommand(it, instanceName).execute()
             }
         }
     }

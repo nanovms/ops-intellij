@@ -15,16 +15,15 @@ class BuildAction : BaseAction() {
             val selectedFiles = FileChooser.chooseFiles(descriptor, null, null)
             if (selectedFiles.isNotEmpty()) {
                 val filePath = selectedFiles[0].path
-                val cmd = BuildCommand(it, filePath).withListener(object: CommandListener() {
+                BuildCommand(it, filePath).withListener(object : CommandListener() {
                     override fun terminated(cmd: Command) {
-                        if(cmd.hasError) {
+                        if (cmd.hasError) {
                             Log.notifyError("Failed to build image for '${filePath}'")
                         } else {
                             Log.notifyInfo("Built image for '${filePath}'")
                         }
                     }
-                })
-                cmd.execute()
+                }).execute()
             }
         }
     }

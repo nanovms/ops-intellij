@@ -22,13 +22,13 @@ class RunWithConfigAction : BaseAction() {
                 descriptor.title = "Select Configuration File"
                 selectedFiles = FileChooser.chooseFiles(descriptor, it, null)
 
-                val command = RunCommand(it, filepath, selectedFiles[0].path).withListener(
+                RunCommand(it, filepath, selectedFiles[0].path).withListener(
                     object : CommandListener() {
                         override fun terminated(cmd: Command) {
                             Log.notifyInfo("[${cmd.pid}] ${cmd.name} terminated")
                         }
-                    })
-                command.execute()
+                    }
+                ).execute()
             }
         }
     }

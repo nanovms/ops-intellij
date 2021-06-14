@@ -32,18 +32,17 @@ class RunSourceAction : BaseAction() {
                     }
 
                     try {
-                        val command = RunSourceCommand(it, file).withListener(
+                        RunSourceCommand(it, file).withListener(
                             object : CommandListener() {
                                 override fun started(cmd: Command) {
                                     Log.infoAndNotify("[exec] ${file.path}")
                                 }
                             }
-                        )
-                        command.execute()
-                    } catch(ex: UnsupportedSourceType) {
+                        ).execute()
+                    } catch (ex: UnsupportedSourceType) {
                         val ops = service<Service>()
-                        ex.message?.let {
-                            msg -> ops.println(it, msg)
+                        ex.message?.let { msg ->
+                            ops.println(it, msg)
                         }
                     }
                 }

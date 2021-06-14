@@ -15,12 +15,11 @@ class RunAction : BaseAction() {
             val selectedFiles = FileChooser.chooseFiles(descriptor, null, null)
             if (selectedFiles.isNotEmpty()) {
                 val filepath = selectedFiles[0].path
-                val command = RunCommand(it, filepath).withListener(object: CommandListener() {
+                RunCommand(it, filepath).withListener(object : CommandListener() {
                     override fun terminated(cmd: Command) {
                         Log.notifyInfo("[${cmd.pid}] ${cmd.name} terminated")
                     }
-                })
-                command.execute()
+                }).execute()
             }
         }
     }
