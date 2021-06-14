@@ -22,13 +22,7 @@ class StopInstanceAction : BaseAction() {
             val isOK = dialog.showAndGet()
             if (isOK) {
                 val instanceName = dialog.model.selectedItem as String
-                val command = StopInstanceCommand(it, instanceName).withListener(
-                    object: CommandListener() {
-                        override fun terminated(cmd: Command) {
-                            Log.notifyInfo("Stopped instance '${cmd.name}'")
-                        }
-                    }
-                )
+                val command = StopInstanceCommand(it, instanceName)
                 command.execute()
             }
         }

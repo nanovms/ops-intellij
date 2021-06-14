@@ -24,7 +24,11 @@ class StartInstanceAction : BaseAction() {
                 val command = StartInstanceCommand(it, selectedImage).withListener(
                     object: CommandListener() {
                         override fun started(cmd: Command) {
-                            Log.notifyInfo("Started new instance of $selectedImage")
+                            Log.notifyInfo("[${cmd.pid}] ${cmd.name} started")
+                        }
+
+                        override fun terminated(cmd: Command) {
+                            Log.notifyInfo("[${cmd.pid}] ${cmd.name} terminated")
                         }
                     }
                 )
