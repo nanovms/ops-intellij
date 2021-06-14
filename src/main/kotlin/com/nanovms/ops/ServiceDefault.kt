@@ -8,16 +8,15 @@ import okhttp3.internal.toImmutableList
 import java.io.*
 
 class ServiceDefault() : Service {
-    override val hasImages: Boolean
-        get() {
-            val proc = execute("image", "list")
-            if (proc.waitFor() != 0) {
-                throw Exception(readStream(proc.errorStream))
-            }
-            val output = readStream(proc.inputStream)
-            val lines = output.split('\n')
-            return lines.size > 3
+    override fun hasImages(): Boolean {
+        val proc = execute("image", "list")
+        if (proc.waitFor() != 0) {
+            throw Exception(readStream(proc.errorStream))
         }
+        val output = readStream(proc.inputStream)
+        val lines = output.split('\n')
+        return lines.size > 3
+    }
 
     override fun listImages(): Array<String> {
         val proc = execute("image", "list")
@@ -27,16 +26,15 @@ class ServiceDefault() : Service {
         return extractTableOutput(readStream(proc.inputStream), 1)
     }
 
-    override val hasInstances: Boolean
-        get() {
-            val proc = execute("instance", "list")
-            if (proc.waitFor() != 0) {
-                throw Exception(readStream(proc.errorStream))
-            }
-            val output = readStream(proc.inputStream)
-            val lines = output.split('\n')
-            return lines.size > 3
+    override fun hasInstances(): Boolean {
+        val proc = execute("instance", "list")
+        if (proc.waitFor() != 0) {
+            throw Exception(readStream(proc.errorStream))
         }
+        val output = readStream(proc.inputStream)
+        val lines = output.split('\n')
+        return lines.size > 3
+    }
 
     override fun listInstances(): Array<String> {
         val proc = execute("instance", "list")
@@ -47,7 +45,6 @@ class ServiceDefault() : Service {
     }
 
     private var _isInstalled: Boolean = false
-
     override val isInstalled: Boolean
         get() = _isInstalled
 

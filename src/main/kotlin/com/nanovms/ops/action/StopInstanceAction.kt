@@ -12,7 +12,7 @@ import com.nanovms.ops.command.StopInstanceCommand
 
 class StopInstanceAction : BaseAction() {
     override fun isEnabled(e: AnActionEvent, ops: Service): Boolean {
-        return ops.hasInstances
+        return ops.hasInstances()
     }
 
     override fun actionPerformed(e: AnActionEvent) {

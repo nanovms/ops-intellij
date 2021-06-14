@@ -11,7 +11,7 @@ import com.nanovms.ops.command.StartInstanceCommand
 
 class StartInstanceAction : BaseAction() {
     override fun isEnabled(e: AnActionEvent, ops: Service): Boolean {
-        return ops.hasImages
+        return ops.hasImages()
     }
 
     override fun actionPerformed(e: AnActionEvent) {
