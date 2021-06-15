@@ -1,7 +1,6 @@
 package com.nanovms.ops.command
 
 import com.intellij.openapi.project.Project
-import java.io.File
 import java.nio.file.Paths
 
 class BuildCommand(project: Project, private val filepath: String) : Command(project) {
