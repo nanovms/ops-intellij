@@ -27,7 +27,7 @@ class RunSourceAction : BaseAction() {
                 var file = FileDocumentManager.getInstance().getFile(editor.document)
                 if (file != null) {
                     if (file.extension == null) {
-                        Log.errorAndNotify("Unknown file extension: ${file.path}")
+                        Log.errorAndNotify(it, "Unknown file extension: ${file.path}")
                         return
                     }
 
@@ -35,14 +35,14 @@ class RunSourceAction : BaseAction() {
                         RunSourceCommand(it, file).withListener(
                             object : CommandListener() {
                                 override fun started(cmd: Command) {
-                                    Log.infoAndNotify("[exec] ${file.path}")
+                                    Log.infoAndNotify(it, "[exec] ${file.path}")
                                 }
                             }
                         ).execute()
                     } catch (ex: UnsupportedSourceType) {
                         val ops = service<Service>()
                         ex.message?.let { msg ->
-                            ops.println(it, msg)
+                            Log.errorAndNotify(it, msg)
                         }
                     }
                 }

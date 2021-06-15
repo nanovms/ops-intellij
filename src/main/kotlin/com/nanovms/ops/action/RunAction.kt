@@ -17,7 +17,7 @@ class RunAction : BaseAction() {
                 val filepath = selectedFiles[0].path
                 RunCommand(it, filepath).withListener(object : CommandListener() {
                     override fun terminated(cmd: Command) {
-                        Log.notifyInfo("[${cmd.pid}] ${cmd.name} terminated")
+                        Log.notifyInfo(it, "[${cmd.pid}] ${cmd.name} terminated")
                     }
                 }).execute()
             }

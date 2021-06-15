@@ -18,9 +18,9 @@ class BuildAction : BaseAction() {
                 BuildCommand(it, filePath).withListener(object : CommandListener() {
                     override fun terminated(cmd: Command) {
                         if (cmd.hasError) {
-                            Log.notifyError("[${cmd.name}] Build failed")
+                            Log.notifyError(it, "[${cmd.name}] Build failed")
                         } else {
-                            Log.notifyInfo("[${cmd.name}] Build success")
+                            Log.notifyInfo(it, "[${cmd.name}] Build success")
                         }
                     }
                 }).execute()

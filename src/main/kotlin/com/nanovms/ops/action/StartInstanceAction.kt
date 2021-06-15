@@ -24,11 +24,11 @@ class StartInstanceAction : BaseAction() {
                 StartInstanceCommand(it, selectedImage).withListener(
                     object : CommandListener() {
                         override fun started(cmd: Command) {
-                            Log.notifyInfo("[${cmd.pid}] ${cmd.name} started")
+                            Log.notifyInfo(it, "[${cmd.pid}] ${cmd.name} started")
                         }
 
                         override fun terminated(cmd: Command) {
-                            Log.notifyInfo("[${cmd.pid}] ${cmd.name} terminated")
+                            Log.notifyInfo(it, "[${cmd.pid}] ${cmd.name} terminated")
                         }
                     }
                 ).execute()

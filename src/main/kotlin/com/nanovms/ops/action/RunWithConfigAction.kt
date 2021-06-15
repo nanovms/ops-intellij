@@ -23,7 +23,7 @@ class RunWithConfigAction : BaseAction() {
                 RunCommand(it, filepath, selectedFiles[0].path).withListener(
                     object : CommandListener() {
                         override fun terminated(cmd: Command) {
-                            Log.notifyInfo("[${cmd.pid}] ${cmd.name} terminated")
+                            Log.notifyInfo(it, "[${cmd.pid}] ${cmd.name} terminated")
                         }
                     }
                 ).execute()
