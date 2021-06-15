@@ -21,7 +21,6 @@ class CommandProcessListener(private val command: Command) : ProcessAdapter() {
         event.text?.let {
             ops.println(command.project, event.text)
         }
-        ops.println(command.project, "[${command.pid}] ${command.name} terminated")
         command.listener?.terminated(command)
     }
 }
