@@ -2,28 +2,37 @@ package com.nanovms.ops.action
 
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.components.service
-import com.nanovms.ops.DropdownDialog
+import com.nanovms.ops.ui.DropdownDialog
 import com.nanovms.ops.Log
-import com.nanovms.ops.OpsService
+import com.nanovms.ops.Service
+import com.nanovms.ops.command.Command
+import com.nanovms.ops.command.CommandListener
+import com.nanovms.ops.command.StartInstanceCommand
 
 class StartInstanceAction : BaseAction() {
-    override fun isEnabled(e: AnActionEvent, ops: OpsService): Boolean {
-        return ops.hasImages
+    override fun isEnabled(e: AnActionEvent, ops: Service): Boolean {
+        return ops.hasImages()
     }
 
     override fun actionPerformed(e: AnActionEvent) {
-        val ops = service<OpsService>()
-        val dialog = DropdownDialog(ops.listImages())
-        val isOK = dialog.showAndGet()
-        if (isOK) {
-            val selectedImage = dialog.model.selectedItem as String
-            val result = ops.startInstance(selectedImage)
-            if (result.hasError) {
-                Log.error(result.error)
-                Log.notifyError("Failed to start $selectedImage")
-                return
+        e.project?.let {
+            val ops = service<Service>()
+            val dialog = DropdownDialog(ops.listImages())
+            val isOK = dialog.showAndGet()
+            if (isOK) {
+                val selectedImage = dialog.model.selectedItem as String
+                StartInstanceCommand(it, selectedImage).withListener(
+                    object : CommandListener() {
+                        override fun started(cmd: Command) {
+                            Log.notifyInfo(it, "[${cmd.pid}] ${cmd.name} started")
+                        }
+
+                        override fun terminated(cmd: Command) {
+                            Log.notifyInfo(it, "[${cmd.pid}] ${cmd.name} terminated")
+                        }
+                    }
+                ).execute()
             }
-            Log.notifyInfo("Started new instance of $selectedImage")
         }
     }
 }

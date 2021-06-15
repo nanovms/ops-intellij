@@ -2,29 +2,24 @@ package com.nanovms.ops.action
 
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.components.service
-import com.nanovms.ops.DropdownDialog
-import com.nanovms.ops.Log
-import com.nanovms.ops.OpsService
+import com.nanovms.ops.ui.DropdownDialog
+import com.nanovms.ops.Service
+import com.nanovms.ops.command.StopInstanceCommand
 
 class StopInstanceAction : BaseAction() {
-    override fun isEnabled(e: AnActionEvent, ops: OpsService): Boolean {
-        return ops.hasInstances
+    override fun isEnabled(e: AnActionEvent, ops: Service): Boolean {
+        return ops.hasInstances()
     }
 
     override fun actionPerformed(e: AnActionEvent) {
-        val ops = service<OpsService>()
-        val dialog = DropdownDialog(ops.listInstances(), null)
-        val isOK = dialog.showAndGet()
-        if (isOK) {
-            val instanceName = dialog.model.selectedItem as String
-            val result = ops.stopInstance(instanceName)
-            if (result.hasError) {
-                Log.error(result.error)
-                Log.notifyError("Failed to stop instance '$instanceName'")
-                return
+        e.project?.let {
+            val ops = service<Service>()
+            val dialog = DropdownDialog(ops.listInstances(), null)
+            val isOK = dialog.showAndGet()
+            if (isOK) {
+                val instanceName = dialog.model.selectedItem as String
+                StopInstanceCommand(it, instanceName).execute()
             }
-            dialog.model.removeElement(instanceName)
-            Log.notifyInfo("Stopped instance '$instanceName'")
         }
     }
 }

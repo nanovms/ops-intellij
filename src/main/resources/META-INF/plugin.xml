@@ -29,15 +29,9 @@
 
     <change-notes>
         <![CDATA[
-            <p>Added following commands.</p>
             <ul>
-                <li>Run an application</li>
-                <li>Run an application with selected configuration</li>
-                <li>Run opened source file</li>
-                <li>Stop running application</li>
-                <li>Build an image</li>
-                <li>Start new instance from selected image</li>
-                <li>Stop running instance</li>
+                <li>Added tool window to display OPS output</li>
+                <li>Fixed few menu actions that enabled when no project opened</li>
             </ul>
         ]]>
     </change-notes>
@@ -47,10 +41,12 @@
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceInterface="com.nanovms.ops.OpsService"
-                            serviceImplementation="com.nanovms.ops.DefaultOpsService"/>
+        <applicationService serviceInterface="com.nanovms.ops.Service"
+                            serviceImplementation="com.nanovms.ops.ServiceDefault"/>
 
         <notificationGroup displayType="BALLOON" id="NanoVMs"/>
+
+        <toolWindow id="NanoVMs" anchor="bottom" factoryClass="com.nanovms.ops.ui.ToolWindowFactory"/>
     </extensions>
 
     <actions>
@@ -64,8 +60,8 @@
                     class="com.nanovms.ops.action.RunWithConfigAction"
                     text="Run with Configuration"
                     description="Run an application with selected configuration"/>
-            <action id="com.nanovms.ops.action.RunOpenedFileAction"
-                    class="com.nanovms.ops.action.RunOpenedFileAction"
+            <action id="com.nanovms.ops.action.RunSourceAction"
+                    class="com.nanovms.ops.action.RunSourceAction"
                     text="Run Opened File"
                     description="Execute opened source file"/>
             <action id="com.nanovms.ops.action.StopAction"

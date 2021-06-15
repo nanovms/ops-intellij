@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "com.nanovms.ops"
-version = "1.0.7"
+version = "1.1"
 
 listOf("compileKotlin", "compileTestKotlin").forEach {
     tasks.getByName<KotlinCompile>(it) {
@@ -20,6 +20,7 @@ repositories {
 
 dependencies {
     implementation(kotlin("stdlib"))
+    implementation(kotlin("script-runtime"))
 }
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
