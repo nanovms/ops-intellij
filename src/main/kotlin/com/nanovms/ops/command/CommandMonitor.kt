@@ -4,7 +4,6 @@ import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
 import com.nanovms.ops.Service
 import java.io.BufferedReader
-import java.io.IOException
 import java.io.InputStreamReader
 
 class CommandMonitor(private val project: Project, private val command: Command) : Thread() {
