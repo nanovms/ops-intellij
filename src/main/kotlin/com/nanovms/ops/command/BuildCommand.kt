@@ -4,13 +4,13 @@ import com.intellij.openapi.project.Project
 import java.io.File
 import java.nio.file.Paths
 
-class BuildCommand(project: Project, private val filepath: String): Command(project) {
+class BuildCommand(project: Project, private val filepath: String) : Command(project) {
     override fun createArguments(): Collection<String> {
         return mutableListOf("build", filepath)
     }
 
     init {
         val imagePath = Paths.get(filepath)
-        name = imagePath.parent.fileName.toString() + File.separatorChar + imagePath.fileName.toString()
+        name = "${imagePath.fileName}.img"
     }
 }
