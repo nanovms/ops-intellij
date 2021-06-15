@@ -2,7 +2,6 @@ package com.nanovms.ops
 
 import com.intellij.openapi.Disposable
 import com.intellij.openapi.project.Project
-import com.intellij.openapi.vfs.VirtualFile
 import com.nanovms.ops.command.Command
 
 interface Service: Disposable {

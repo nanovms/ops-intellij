@@ -3,11 +3,7 @@ package com.nanovms.ops.action
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.components.service
 import com.nanovms.ops.ui.DropdownDialog
-import com.nanovms.ops.Log
 import com.nanovms.ops.Service
-import com.nanovms.ops.command.Command
-import com.nanovms.ops.command.CommandListener
-import com.nanovms.ops.command.StartInstanceCommand
 import com.nanovms.ops.command.StopInstanceCommand
 
 class StopInstanceAction : BaseAction() {
