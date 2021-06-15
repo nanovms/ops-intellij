@@ -20,5 +20,6 @@ class RunSourceCommand(project: Project, private val file: VirtualFile) : Comman
 
     init {
         type = CommandType.RunExecutable
+        name = file.name
     }
 }
