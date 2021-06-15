@@ -10,7 +10,7 @@ class CommandMonitor(private val project: Project, private val command: Command)
     override fun run() {
         val ops = service<Service>()
         val reader = BufferedReader(InputStreamReader(command.inputStream))
-        var line: String
+        var line: String?
         while (command.isAlive) {
             line = reader.readLine()
             line?.let {
