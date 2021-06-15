@@ -29,15 +29,9 @@
 
     <change-notes>
         <![CDATA[
-            <p>Added following commands.</p>
             <ul>
-                <li>Run an application</li>
-                <li>Run an application with selected configuration</li>
-                <li>Run opened source file</li>
-                <li>Stop running application</li>
-                <li>Build an image</li>
-                <li>Start new instance from selected image</li>
-                <li>Stop running instance</li>
+                <li>Added tool window to display OPS output</li>
+                <li>Fixed few menu actions that enabled when no project opened</li>
             </ul>
         ]]>
     </change-notes>
