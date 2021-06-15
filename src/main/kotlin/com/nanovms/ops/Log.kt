@@ -26,15 +26,13 @@ object Log {
     }
 
     private fun error(project: Project, message: String) {
-        val msg = "[NanoVMs] ERR: $message"
-        logger.error(msg)
-        ops.println(project, msg)
+        logger.error("[NanoVMs] ERR: $message")
+        ops.println(project, "ERROR: $message")
     }
 
     private fun info(project: Project, message: String) {
-        val msg = "[NanoVMs]: $message"
-        logger.info(msg)
-        ops.println(project, msg)
+        logger.info("[NanoVMs]: $message")
+        ops.println(project, "INFO: $message")
     }
 
     private fun notify(project: Project, message: String, type: NotificationType) {
