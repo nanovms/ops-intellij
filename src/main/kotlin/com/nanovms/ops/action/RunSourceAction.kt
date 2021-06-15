@@ -13,9 +13,6 @@ import com.nanovms.ops.command.UnsupportedSourceType
 
 class RunSourceAction : BaseAction() {
     override fun isEnabled(e: AnActionEvent, ops: Service): Boolean {
-        if (e.project == null) {
-            return false
-        }
         val editor = FileEditorManager.getInstance(e.project!!).selectedTextEditor
         return (editor != null)
     }
