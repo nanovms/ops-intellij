@@ -53,6 +53,7 @@ abstract class Command(val project: Project) {
                 command += " $arg"
             }
         }
+        command += " --show-debug"
 
         _processHandler = OSProcessHandler(Runtime.getRuntime().exec(command), command, Charsets.UTF_8)
         _processHandler.setShouldDestroyProcessRecursively(true)
