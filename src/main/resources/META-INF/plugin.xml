@@ -29,10 +29,7 @@
 
     <change-notes>
         <![CDATA[
-            <ul>
-                <li>Added tool window to display OPS output</li>
-                <li>Fixed few menu actions that enabled when no project opened</li>
-            </ul>
+            Added settings to extend runtime PATH.
         ]]>
     </change-notes>
 
@@ -43,10 +40,17 @@
     <extensions defaultExtensionNs="com.intellij">
         <applicationService serviceInterface="com.nanovms.ops.Service"
                             serviceImplementation="com.nanovms.ops.ServiceDefault"/>
+        <applicationService serviceImplementation="com.nanovms.ops.Settings"/>
+
 
         <notificationGroup displayType="BALLOON" id="NanoVMs"/>
 
         <toolWindow id="NanoVMs" anchor="bottom" factoryClass="com.nanovms.ops.ui.ToolWindowFactory"/>
+
+        <applicationConfigurable parentId="tools"
+                                 instance="com.nanovms.ops.ui.ConfigurableSettings"
+                                 id="com.nanovms.ops.ui.ConfigurableSettings"
+                                 displayName="NanoVMs"/>
     </extensions>
 
     <actions>

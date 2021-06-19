@@ -15,5 +15,7 @@ interface Service: Disposable {
     fun releaseCommand(command: Command)
     fun runningExecutables(): Collection<Command>
 
+    val settings: Settings
+
     fun println(project: Project, vararg texts: String)
 }

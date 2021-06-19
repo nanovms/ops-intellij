@@ -1,5 +1,6 @@
 package com.nanovms.ops
 
+import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
 import com.nanovms.ops.command.Command
 import com.nanovms.ops.command.CommandType
@@ -77,6 +78,8 @@ class ServiceDefault() : Service {
         return list.toImmutableList()
     }
 
+    override val settings = service<Settings>()
+
     override fun println(project: Project, vararg texts: String) {
         ToolWindowFactory.println(project, texts.joinToString(" "))
     }
@@ -106,7 +109,8 @@ class ServiceDefault() : Service {
         for (arg in args) {
             cmd += " $arg"
         }
-        return Runtime.getRuntime().exec(cmd)
+
+        return Runtime.getRuntime().exec(cmd, arrayOf("PATH=${settings.getMergedPaths()}"))
     }
 
     private fun readStream(input: InputStream): String {
