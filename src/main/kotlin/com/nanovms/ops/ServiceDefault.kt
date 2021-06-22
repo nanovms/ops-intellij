@@ -110,7 +110,9 @@ class ServiceDefault() : Service {
             cmd += " $arg"
         }
 
-        return Runtime.getRuntime().exec(cmd, arrayOf("PATH=${settings.getMergedPaths()}"))
+        val pathList = settings.getMergedPaths()
+        println("[OPS] Execute \"${cmd}\" with PATH=${pathList}")
+        return Runtime.getRuntime().exec(cmd, arrayOf("PATH=${pathList}"))
     }
 
     private fun readStream(input: InputStream): String {

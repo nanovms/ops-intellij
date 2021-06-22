@@ -3,6 +3,7 @@ package com.nanovms.ops.command
 import com.intellij.execution.process.OSProcessHandler
 import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
+import com.nanovms.ops.Ops
 import com.nanovms.ops.Service
 import java.io.File
 import java.io.InputStream
@@ -55,7 +56,9 @@ abstract class Command(val project: Project) {
         }
         command += " --show-debug"
 
-        _processHandler = OSProcessHandler(Runtime.getRuntime().exec(command), command, Charsets.UTF_8)
+        val pathList = Ops.instance.settings.getMergedPaths()
+        println("[OPS] Execute \"${command}\" with PATH=${pathList}")
+        _processHandler = OSProcessHandler(Runtime.getRuntime().exec(command, arrayOf("PATH=${pathList}")), command, Charsets.UTF_8)
         _processHandler.setShouldDestroyProcessRecursively(true)
         _processHandler?.addProcessListener(CommandProcessListener(this))
         _processHandler?.startNotify()
