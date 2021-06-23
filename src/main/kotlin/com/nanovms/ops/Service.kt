@@ -1,5 +1,6 @@
 package com.nanovms.ops
 
+import com.intellij.execution.process.OSProcessHandler
 import com.intellij.openapi.Disposable
 import com.intellij.openapi.project.Project
 import com.nanovms.ops.command.Command
@@ -16,4 +17,6 @@ interface Service: Disposable {
     val settings: Settings
 
     fun println(project: Project, vararg texts: String)
+
+    fun execute(vararg args: String): OSProcessHandler
 }

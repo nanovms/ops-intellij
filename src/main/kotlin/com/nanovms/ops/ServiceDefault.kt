@@ -1,5 +1,6 @@
 package com.nanovms.ops
 
+import com.intellij.execution.process.OSProcessHandler
 import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
 import com.nanovms.ops.command.Command
@@ -10,7 +11,8 @@ import java.io.*
 
 class ServiceDefault : Service {
     override fun listImages(): Array<String> {
-        val proc = execute("image", "list")
+        val procHandler = execute("image", "list")
+        val proc = procHandler.process
         if (proc.waitFor() != 0) {
             throw Exception(readStream(proc.errorStream))
         }
@@ -18,7 +20,8 @@ class ServiceDefault : Service {
     }
 
     override fun listInstances(): Array<String> {
-        val proc = execute("instance", "list")
+        val procHandler = execute("instance", "list")
+        val proc = procHandler.process
         if (proc.waitFor() != 0) {
             throw Exception(readStream(proc.errorStream))
         }
@@ -64,6 +67,23 @@ class ServiceDefault : Service {
         ToolWindowFactory.println(project, texts.joinToString(" "))
     }
 
+    override fun execute(vararg args: String): OSProcessHandler {
+        var cmd = homeDir() + File.separatorChar + "bin" + File.separatorChar + "ops"
+        val file = File(cmd)
+        if (!file.exists()) {
+            cmd = "ops"
+        }
+        for (arg in args) {
+            cmd += " $arg"
+        }
+        cmd += " --show-debug"
+
+        val pathList = settings.getMergedPaths()
+        val userHomeDir = System.getProperty("user.home")
+        println("[OPS] Execute \"$cmd\" with PATH=$pathList")
+        return OSProcessHandler(Runtime.getRuntime().exec(cmd, arrayOf("PATH=$pathList", "HOME=$userHomeDir")), cmd, Charsets.UTF_8)
+    }
+
     init {
         var file = File(homeDir() + File.separatorChar + "bin" + File.separatorChar + "ops")
         if (file.exists()) {
@@ -78,21 +98,6 @@ class ServiceDefault : Service {
                 }
             }
         }
-    }
-
-    private fun execute(vararg args: String): Process {
-        var cmd = homeDir() + File.separatorChar + "bin" + File.separatorChar + "ops"
-        val file = File(cmd)
-        if (!file.exists()) {
-            cmd = "ops"
-        }
-        for (arg in args) {
-            cmd += " $arg"
-        }
-
-        val pathList = settings.getMergedPaths()
-        println("[OPS] Execute \"${cmd}\" with PATH=${pathList}")
-        return Runtime.getRuntime().exec(cmd, arrayOf("PATH=${pathList}"))
     }
 
     private fun readStream(input: InputStream): String {

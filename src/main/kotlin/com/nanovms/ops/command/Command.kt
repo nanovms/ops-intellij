@@ -1,13 +1,9 @@
 package com.nanovms.ops.command
 
 import com.intellij.execution.process.OSProcessHandler
-import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
 import com.nanovms.ops.Ops
-import com.nanovms.ops.Service
-import java.io.File
 import java.io.InputStream
-import java.io.OutputStream
 
 enum class CommandType {
     RunExecutable,
@@ -46,31 +42,14 @@ abstract class Command(val project: Project) {
     }
 
     fun execute() {
-        var command = homeDir() + File.separatorChar + "bin" + File.separatorChar + "ops"
-        val file = File(command)
-        if (!file.exists()) {
-            command = "ops"
-        }
-
-        val arguments = createArguments()
-        if(arguments.isNotEmpty()) {
-            for (arg in arguments) {
-                command += " $arg"
-            }
-        }
-        command += " --show-debug"
-
-        val pathList = Ops.instance.settings.getMergedPaths()
-        println("[OPS] Execute \"${command}\" with PATH=${pathList}")
-        _processHandler = OSProcessHandler(Runtime.getRuntime().exec(command, arrayOf("PATH=${pathList}")), command, Charsets.UTF_8)
+        _processHandler = Ops.instance.execute(*createArguments().toTypedArray())
         _processHandler.setShouldDestroyProcessRecursively(true)
         _processHandler?.addProcessListener(CommandProcessListener(this))
         _processHandler?.startNotify()
         monitor = CommandMonitor(project, this)
         monitor.start()
 
-        val ops = service<Service>()
-        ops.holdCommand(this)
+        Ops.instance.holdCommand(this)
     }
 
     fun stop() {
@@ -78,11 +57,6 @@ abstract class Command(val project: Project) {
     }
 
     protected abstract fun createArguments(): Collection<String>
-
-    private fun homeDir(): String {
-        val userHomeDir = System.getProperty("user.home")
-        return userHomeDir + File.separatorChar + ".ops"
-    }
 
     private lateinit var monitor: CommandMonitor
     private lateinit var _processHandler: OSProcessHandler
