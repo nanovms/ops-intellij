@@ -8,7 +8,7 @@ import com.nanovms.ops.ui.ToolWindowFactory
 import okhttp3.internal.toImmutableList
 import java.io.*
 
-class ServiceDefault() : Service {
+class ServiceDefault : Service {
     override fun listImages(): Array<String> {
         val proc = execute("image", "list")
         if (proc.waitFor() != 0) {
@@ -97,11 +97,9 @@ class ServiceDefault() : Service {
 
     private fun readStream(input: InputStream): String {
         val reader = BufferedReader(InputStreamReader(input))
-        var output: String
-        try {
-            output = reader.readText()
-        } finally {
-            reader.close()
+        val output: String
+        reader.use {
+            output = it.readText()
         }
         return output.trim()
     }
@@ -114,7 +112,7 @@ class ServiceDefault() : Service {
     private fun extractTableOutput(output: String, colIndex: Int): Array<String> {
         val rows = mutableListOf<String>()
         val lines = output.split('\n')
-        if (lines.size === 3) {
+        if (lines.size == 3) {
             return arrayOf() // no image listed
         }
 
@@ -138,6 +136,6 @@ class ServiceDefault() : Service {
             }
             rows.add(value)
         }
-        return rows.toTypedArray();
+        return rows.toTypedArray()
     }
 }
