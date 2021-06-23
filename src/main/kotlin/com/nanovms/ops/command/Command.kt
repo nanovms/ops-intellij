@@ -7,6 +7,7 @@ import com.nanovms.ops.Ops
 import com.nanovms.ops.Service
 import java.io.File
 import java.io.InputStream
+import java.io.OutputStream
 
 enum class CommandType {
     RunExecutable,
@@ -31,6 +32,9 @@ abstract class Command(val project: Project) {
 
     val inputStream: InputStream
         get() = _processHandler.process.inputStream
+
+    val errorStream: InputStream
+        get() = _processHandler.process.errorStream
 
     private var _listener: CommandListener? = null
     val listener: CommandListener?
