@@ -7,16 +7,17 @@ import java.awt.EventQueue
 
 class ConsolePanel : BorderLayoutPanel() {
     private val textArea = JBTextArea()
-    private val scrollPane = JBScrollPane(textArea, JBScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JBScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED)
+    private val scrollPane =
+        JBScrollPane(textArea, JBScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JBScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED)
 
     init {
         textArea.isEditable = false
         addToCenter(scrollPane)
     }
 
-    fun println(text: String) {
+    fun append(text: String) {
         EventQueue.invokeLater {
-            textArea.append("$text\n")
+            textArea.append(text)
             val vertical = scrollPane.verticalScrollBar
             vertical.value = vertical.maximum * 2
         }

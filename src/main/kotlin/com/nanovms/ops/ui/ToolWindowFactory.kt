@@ -19,12 +19,12 @@ class ToolWindowFactory(): ToolWindowFactory {
     companion object {
         private const val OpsDisplayName = "OPS"
 
-        fun println(project: Project, text: String) {
+        fun print(project: Project, text: String) {
             project?.let {
                 val content = getContent(project, OpsDisplayName)
                 content?.let {
                     val panel = content.component as? ConsolePanel
-                    panel?.println(text)
+                    panel?.append(text)
                 }
             }
         }

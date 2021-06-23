@@ -1,7 +1,10 @@
 package com.nanovms.ops.command
 
 import com.intellij.execution.process.OSProcessHandler
+import com.intellij.execution.process.ProcessEvent
+import com.intellij.execution.process.ProcessListener
 import com.intellij.openapi.project.Project
+import com.intellij.openapi.util.Key
 import com.nanovms.ops.Ops
 import java.io.InputStream
 
@@ -44,10 +47,22 @@ abstract class Command(val project: Project) {
     fun execute() {
         _processHandler = Ops.instance.execute(*createArguments().toTypedArray())
         _processHandler.setShouldDestroyProcessRecursively(true)
-        _processHandler?.addProcessListener(CommandProcessListener(this))
-        _processHandler?.startNotify()
-        monitor = CommandMonitor(project, this)
-        monitor.start()
+        _processHandler.addProcessListener(CommandProcessListener(this))
+        _processHandler.startNotify()
+        _processHandler.addProcessListener(object : ProcessListener {
+            override fun startNotified(event: ProcessEvent) {}
+            override fun processTerminated(event: ProcessEvent) {}
+            override fun onTextAvailable(event: ProcessEvent, outputType: Key<*>) {
+                if (!event.text.endsWith('\n')) {
+                    // Ops output usually ended with newline,
+                    // the one that doesn't usually a progress bar update text.
+                    // By skipping this, we can display the progress bar in one line using half of the update,
+                    // and the other half are these line without newline.
+                    return
+                }
+                Ops.instance.print(project, event.text)
+            }
+        })
 
         Ops.instance.holdCommand(this)
     }
@@ -57,7 +72,5 @@ abstract class Command(val project: Project) {
     }
 
     protected abstract fun createArguments(): Collection<String>
-
-    private lateinit var monitor: CommandMonitor
     private lateinit var _processHandler: OSProcessHandler
 }
