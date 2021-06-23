@@ -16,7 +16,8 @@ interface Service: Disposable {
 
     val settings: Settings
 
-    fun println(project: Project, vararg texts: String)
+    fun println(project: Project, text: String)
+    fun print(project: Project, text: String)
 
     fun execute(vararg args: String): OSProcessHandler
 }

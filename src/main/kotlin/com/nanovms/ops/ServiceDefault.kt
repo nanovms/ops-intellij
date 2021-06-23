@@ -63,8 +63,12 @@ class ServiceDefault : Service {
 
     override val settings = service<Settings>()
 
-    override fun println(project: Project, vararg texts: String) {
-        ToolWindowFactory.println(project, texts.joinToString(" "))
+    override fun println(project: Project, text: String) {
+        ToolWindowFactory.print(project, text + "\n")
+    }
+
+    override fun print(project: Project, text: String) {
+        ToolWindowFactory.print(project, text)
     }
 
     override fun execute(vararg args: String): OSProcessHandler {
@@ -80,8 +84,11 @@ class ServiceDefault : Service {
 
         val pathList = settings.getMergedPaths()
         val userHomeDir = System.getProperty("user.home")
-        println("[OPS] Execute \"$cmd\" with PATH=$pathList")
-        return OSProcessHandler(Runtime.getRuntime().exec(cmd, arrayOf("PATH=$pathList", "HOME=$userHomeDir")), cmd, Charsets.UTF_8)
+        return OSProcessHandler(
+            Runtime.getRuntime().exec(cmd, arrayOf("PATH=$pathList", "HOME=$userHomeDir")),
+            cmd,
+            Charsets.UTF_8
+        )
     }
 
     init {
