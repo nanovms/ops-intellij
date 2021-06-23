@@ -5,9 +5,7 @@ import com.intellij.openapi.project.Project
 import com.nanovms.ops.command.Command
 
 interface Service: Disposable {
-    fun hasImages(): Boolean
     fun listImages(): Array<String>
-    fun hasInstances(): Boolean
     fun listInstances(): Array<String>
     val isInstalled: Boolean
 

@@ -9,32 +9,12 @@ import okhttp3.internal.toImmutableList
 import java.io.*
 
 class ServiceDefault() : Service {
-    override fun hasImages(): Boolean {
-        val proc = execute("image", "list")
-        if (proc.waitFor() != 0) {
-            throw Exception(readStream(proc.errorStream))
-        }
-        val output = readStream(proc.inputStream)
-        val lines = output.split('\n')
-        return lines.size > 3
-    }
-
     override fun listImages(): Array<String> {
         val proc = execute("image", "list")
         if (proc.waitFor() != 0) {
             throw Exception(readStream(proc.errorStream))
         }
         return extractTableOutput(readStream(proc.inputStream), 1)
-    }
-
-    override fun hasInstances(): Boolean {
-        val proc = execute("instance", "list")
-        if (proc.waitFor() != 0) {
-            throw Exception(readStream(proc.errorStream))
-        }
-        val output = readStream(proc.inputStream)
-        val lines = output.split('\n')
-        return lines.size > 3
     }
 
     override fun listInstances(): Array<String> {
