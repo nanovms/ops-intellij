@@ -1,5 +1,7 @@
 package com.nanovms.ops
 
+import com.intellij.execution.process.OSProcessHandler
+import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
 import com.nanovms.ops.command.Command
 import com.nanovms.ops.command.CommandType
@@ -7,37 +9,19 @@ import com.nanovms.ops.ui.ToolWindowFactory
 import okhttp3.internal.toImmutableList
 import java.io.*
 
-class ServiceDefault() : Service {
-    override fun hasImages(): Boolean {
-        val proc = execute("image", "list")
-        if (proc.waitFor() != 0) {
-            throw Exception(readStream(proc.errorStream))
-        }
-        val output = readStream(proc.inputStream)
-        val lines = output.split('\n')
-        return lines.size > 3
-    }
-
+class ServiceDefault : Service {
     override fun listImages(): Array<String> {
-        val proc = execute("image", "list")
+        val procHandler = execute("image", "list")
+        val proc = procHandler.process
         if (proc.waitFor() != 0) {
             throw Exception(readStream(proc.errorStream))
         }
         return extractTableOutput(readStream(proc.inputStream), 1)
     }
 
-    override fun hasInstances(): Boolean {
-        val proc = execute("instance", "list")
-        if (proc.waitFor() != 0) {
-            throw Exception(readStream(proc.errorStream))
-        }
-        val output = readStream(proc.inputStream)
-        val lines = output.split('\n')
-        return lines.size > 3
-    }
-
     override fun listInstances(): Array<String> {
-        val proc = execute("instance", "list")
+        val procHandler = execute("instance", "list")
+        val proc = procHandler.process
         if (proc.waitFor() != 0) {
             throw Exception(readStream(proc.errorStream))
         }
@@ -77,8 +61,27 @@ class ServiceDefault() : Service {
         return list.toImmutableList()
     }
 
+    override val settings = service<Settings>()
+
     override fun println(project: Project, vararg texts: String) {
         ToolWindowFactory.println(project, texts.joinToString(" "))
+    }
+
+    override fun execute(vararg args: String): OSProcessHandler {
+        var cmd = homeDir() + File.separatorChar + "bin" + File.separatorChar + "ops"
+        val file = File(cmd)
+        if (!file.exists()) {
+            cmd = "ops"
+        }
+        for (arg in args) {
+            cmd += " $arg"
+        }
+        cmd += " --show-debug"
+
+        val pathList = settings.getMergedPaths()
+        val userHomeDir = System.getProperty("user.home")
+        println("[OPS] Execute \"$cmd\" with PATH=$pathList")
+        return OSProcessHandler(Runtime.getRuntime().exec(cmd, arrayOf("PATH=$pathList", "HOME=$userHomeDir")), cmd, Charsets.UTF_8)
     }
 
     init {
@@ -97,25 +100,11 @@ class ServiceDefault() : Service {
         }
     }
 
-    private fun execute(vararg args: String): Process {
-        var cmd = homeDir() + File.separatorChar + "bin" + File.separatorChar + "ops"
-        val file = File(cmd)
-        if (!file.exists()) {
-            cmd = "ops"
-        }
-        for (arg in args) {
-            cmd += " $arg"
-        }
-        return Runtime.getRuntime().exec(cmd)
-    }
-
     private fun readStream(input: InputStream): String {
         val reader = BufferedReader(InputStreamReader(input))
-        var output: String
-        try {
-            output = reader.readText()
-        } finally {
-            reader.close()
+        val output: String
+        reader.use {
+            output = it.readText()
         }
         return output.trim()
     }
@@ -128,7 +117,7 @@ class ServiceDefault() : Service {
     private fun extractTableOutput(output: String, colIndex: Int): Array<String> {
         val rows = mutableListOf<String>()
         val lines = output.split('\n')
-        if (lines.size === 3) {
+        if (lines.size == 3) {
             return arrayOf() // no image listed
         }
 
@@ -152,6 +141,6 @@ class ServiceDefault() : Service {
             }
             rows.add(value)
         }
-        return rows.toTypedArray();
+        return rows.toTypedArray()
     }
 }

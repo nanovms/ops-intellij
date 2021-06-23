@@ -1,10 +1,8 @@
 package com.nanovms.ops.command
 
 import com.intellij.execution.process.OSProcessHandler
-import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
-import com.nanovms.ops.Service
-import java.io.File
+import com.nanovms.ops.Ops
 import java.io.InputStream
 
 enum class CommandType {
@@ -31,6 +29,9 @@ abstract class Command(val project: Project) {
     val inputStream: InputStream
         get() = _processHandler.process.inputStream
 
+    val errorStream: InputStream
+        get() = _processHandler.process.errorStream
+
     private var _listener: CommandListener? = null
     val listener: CommandListener?
         get() = _listener
@@ -41,29 +42,14 @@ abstract class Command(val project: Project) {
     }
 
     fun execute() {
-        var command = homeDir() + File.separatorChar + "bin" + File.separatorChar + "ops"
-        val file = File(command)
-        if (!file.exists()) {
-            command = "ops"
-        }
-
-        val arguments = createArguments()
-        if(arguments.isNotEmpty()) {
-            for (arg in arguments) {
-                command += " $arg"
-            }
-        }
-        command += " --show-debug"
-
-        _processHandler = OSProcessHandler(Runtime.getRuntime().exec(command), command, Charsets.UTF_8)
+        _processHandler = Ops.instance.execute(*createArguments().toTypedArray())
         _processHandler.setShouldDestroyProcessRecursively(true)
         _processHandler?.addProcessListener(CommandProcessListener(this))
         _processHandler?.startNotify()
         monitor = CommandMonitor(project, this)
         monitor.start()
 
-        val ops = service<Service>()
-        ops.holdCommand(this)
+        Ops.instance.holdCommand(this)
     }
 
     fun stop() {
@@ -71,11 +57,6 @@ abstract class Command(val project: Project) {
     }
 
     protected abstract fun createArguments(): Collection<String>
-
-    private fun homeDir(): String {
-        val userHomeDir = System.getProperty("user.home")
-        return userHomeDir + File.separatorChar + ".ops"
-    }
 
     private lateinit var monitor: CommandMonitor
     private lateinit var _processHandler: OSProcessHandler
