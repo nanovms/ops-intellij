@@ -2,6 +2,8 @@
 
 This plugin runs Nanos unikernels through integration with ops.
 
+![Demo](src/main/resources/images/demo.gif)
+
 Learn more about https://nanos.org and https://ops.city .
 
 * Run an application. Supported executable format is ELF.
